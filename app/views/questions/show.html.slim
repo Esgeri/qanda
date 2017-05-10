@@ -1,0 +1,15 @@
+h1.title= @question.title
+p.body= @question.body
+
+br
+h2.answers Answers
+- @question.answers.each do |answer|
+  p.answer_body= answer.body
+
+br
+
+- if user_signed_in?
+  p.create= form_for [@question, @question.answers.build] do |f|
+    = f.label :body, 'Your Answer'
+    = f.text_area :body
+    = f.submit 'Post Your Answer', class: 'btn btn-primary'
