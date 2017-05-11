@@ -8,6 +8,9 @@ br
 h2.answers Answers
 - @question.answers.each do |answer|
   p.answer_body= answer.body
+  - if user_signed_in?
+    - if current_user.id == answer.question.user_id
+      = link_to 'Delete Answer', question_answer_path(@question, answer), method: :delete, data: { confirm: 'Are you sure?' }
 
 br
 
