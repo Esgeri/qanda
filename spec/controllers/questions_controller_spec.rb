@@ -65,6 +65,10 @@ RSpec.describe QuestionsController, type: :controller do
         expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
       end
 
+      it 'save the question with current user' do
+        expect { post :create, params: { question: attributes_for(:question) } }.to change(@user.questions, :count).by(1)
+      end
+
       it 'redirects to show view' do
         post :create, params: { question: attributes_for(:question) }
         expect(response).to redirect_to question_path(assigns(:question))
@@ -125,13 +129,31 @@ RSpec.describe QuestionsController, type: :controller do
 
     before { question }
 
-    it 'delete question' do
-      expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+    context 'Author can delete his own question' do
+      let(:question) { create(:question, user: @user) }
+
+      it 'delete question' do
+        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+      end
+
+      it 'redirect to index view' do
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to questions_path
+      end
     end
 
-    it 'redirect to index view' do
-      delete :destroy, params: { id: question }
-      expect(response).to redirect_to questions_path
+    context 'No author can not delete question' do
+      let!(:another_user) { create(:user) }
+      let!(:question) { create(:question, user: another_user) }
+
+      it 'can not delete' do
+        expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
+      end
+
+      it 'redirects to question show view' do
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to questions_path
+      end
     end
   end
 end

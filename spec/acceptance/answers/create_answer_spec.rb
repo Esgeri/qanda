@@ -17,6 +17,8 @@ feature 'Create answer', %q{
       click_on 'Post Your Answer'
 
       expect(page).to have_content 'Your answer successfully created.'
+      expect(page).to have_content 'Ask Google!'
+      expect(current_path).to eq question_path(question)
     end
 
     scenario 'Non-authenticated user can tries to create answer' do
@@ -25,4 +27,13 @@ feature 'Create answer', %q{
       expect(page).to_not have_selector '.btn btn-primary'
     end
 
+    scenario 'Authenticated user can not create answer with invalid body' do
+      sign_in(user)
+
+      visit question_path(question)
+      fill_in 'Your Answer', with: ''
+      click_on 'Post Your Answer'
+
+      expect(page).to have_content 'Your answer is not created.'
+    end
 end

@@ -21,6 +21,7 @@ class QuestionsController < ApplicationController
       flash[:notice] = 'Your question successfully created.'
       redirect_to @question
     else
+      flash[:notice] = 'Your question is not created.'
       render :new
     end
   end
@@ -34,8 +35,11 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy
-    redirect_to questions_path, notice: 'Your question successfully deleted.'
+    if current_user.author_of?(@question)
+      @question.destroy
+      flash[:notice] = 'Your question successfully deleted.'
+    end
+    redirect_to questions_path
   end
 
   private

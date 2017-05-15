@@ -7,36 +7,31 @@ feature 'User can delete own answer', %q{
 } do
 
     given(:user) { create(:user) }
-    given(:question) { create(:question, :question_answers, user: user) }
-    given(:another_question) { create(:question, :question_answers) }
+    given(:question) { create(:question, user: user) }
+    given(:answer) { create(:answer, question: question, user: user) }
+    given(:another_user) { create(:user) }
 
     scenario 'Authenticated user can delete own answer' do
       sign_in(user)
 
-      visit question_path(question)
+      visit question_path(answer.question)
 
-      question.answers.each do |answer|
-        expect(page).to have_content answer.body
-        if answer.user_id == user.id
-          click_on 'Delete Answer'
-          expect(page).to have_content 'Your answer successfully deleted.'
-        end
-      end
+      expect(page).to have_content answer.body
+      click_on 'Delete Answer'
+      expect(page).to have_content 'Your answer successfully deleted.'
+      expect(page).to_not have_content answer.body
+
       expect(current_path).to eq question_path(question)
     end
 
     scenario 'Authenticated user can not delete another answer' do
-      sign_in(user)
+      sign_in(another_user)
 
-      visit question_path(another_question)
+      visit question_path(question)
 
-      another_question.answers.each do |answer|
-        expect(page).to have_content answer.body
-        if answer.user_id != user.id
-          expect(page).to_not have_link 'Delete Answer'
-        end
-      end
-      expect(current_path).to eq question_path(another_question)
+      expect(page).to_not have_link 'Delete Answer'
+
+      expect(current_path).to eq question_path(question)
     end
 
     scenario 'Non-authenticated user tries delete answer' do
