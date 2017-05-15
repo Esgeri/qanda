@@ -34,6 +34,6 @@ feature 'Create answer', %q{
       fill_in 'Your Answer', with: ''
       click_on 'Post Your Answer'
 
-      expect(page).to have_content 'Your answer is not created.'
+      expect(page).to have_content "Body can't be blank."
     end
 end

@@ -40,19 +40,6 @@ feature 'Create question', %q{
       fill_in 'Body', with: 'text text'
       click_on 'Create'
 
-      expect(page).to have_content 'Your question is not created.'
-    end
-
-    scenario 'Authenticated user can not create question with invalid body' do
-      sign_in(user)
-
-      visit questions_path
-      click_on 'Ask Question'
-
-      fill_in 'Title', with: 'Test question'
-      fill_in 'Body', with: ''
-      click_on 'Create'
-
-      expect(page).to have_content 'Your question is not created.'
+      expect(page).to have_content "Title can't be blank"
     end
 end

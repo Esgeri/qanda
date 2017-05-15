@@ -11,7 +11,7 @@ class AnswersController < ApplicationController
       flash[:notice] = 'Your answer successfully created.'
       redirect_to @question
     else
-      flash[:notice] = 'Your answer is not created.'
+      flash[:notice] = "Body can't be blank."
       render 'questions/show'
     end
   end
