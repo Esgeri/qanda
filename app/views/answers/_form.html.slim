@@ -1,6 +1,6 @@
 h2 Create Answer
 p.create= form_for [@question, @question.answers.build] do |f|
-  = render 'common/error_messages', resource: @question
+  = render 'common/error_messages', resource: @answer if @answer
   = f.label :body, 'Your Answer'
   = f.text_area :body
   = f.submit 'Post Your Answer', class: 'btn btn-primary'
