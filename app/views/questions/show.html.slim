@@ -6,7 +6,7 @@ p.body= @question.body
 br
 - if @question.answers.any?
   h2.answers Answers
-  = render 'questions/answer'
+  = render 'questions/answers'
 br
 
 - if user_signed_in?
