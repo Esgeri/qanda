@@ -31,6 +31,7 @@ ActiveRecord::Migration.maintain_test_schema!
 Capybara.register_driver :selenium do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome)
 end
+Capybara.default_max_wait_time = 60
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
