@@ -16,9 +16,13 @@ feature 'Create answer', %q{
       fill_in 'Your Answer', with: 'Ask Google!'
       click_on 'Post Your Answer'
 
-      expect(page).to have_content 'Your answer successfully created.'
-      expect(page).to have_content 'Ask Google!'
       expect(current_path).to eq question_path(question)
+      expect(page).to have_content 'Your answer successfully created.'
+      expect(page).to have_content question.title
+      expect(page).to have_content question.body
+      within '.answers' do
+        expect(page).to have_content 'Ask Google!'
+      end
     end
 
     scenario 'Non-authenticated user can tries to create answer' do
