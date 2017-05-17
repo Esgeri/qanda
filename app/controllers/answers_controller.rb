@@ -10,7 +10,7 @@ class AnswersController < ApplicationController
     respond_to do |format|
       format.js { render @answer.save ? 'create' : 'errors' }
       format.html do
-        @answer.save ? redirect_to(@question, notice: 'Your answer successfully created.') : render('questions/show')
+        @answer.save ? redirect_to(@question) : render('questions/show')
       end
     end
   end

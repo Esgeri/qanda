@@ -1,5 +1,5 @@
 h2 Create Answer
-p.create= form_for [@question, @question.answers.build], remote: true do |f|
+= form_for [@question, @question.answers.build], remote: true do |f|
   #errors= render 'common/error_messages', resource: @answer if @answer
   = f.label :body, 'Your Answer'
   = f.text_area :body
