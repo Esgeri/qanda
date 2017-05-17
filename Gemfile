@@ -62,6 +62,7 @@ group :test, :development do
   gem 'factory_girl_rails'
   gem 'selenium-webdriver'
   gem "chromedriver-helper", "1.0.0"
+  gem 'database_cleaner'
 end
 
 group :test do
