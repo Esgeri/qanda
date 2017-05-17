@@ -7,9 +7,9 @@ feature 'Create answer', %q{
 } do
 
     given(:user) { create(:user) }
-    given(:question) { create(:question) }
+    given!(:question) { create(:question) }
 
-    scenario 'Authenticated user can create answer' do
+    scenario 'Authenticated user can create answer', js: true do
       sign_in(user)
 
       visit question_path(question)
@@ -31,7 +31,7 @@ feature 'Create answer', %q{
       expect(page).to_not have_selector '.btn btn-primary'
     end
 
-    scenario 'Authenticated user can not create answer with invalid body' do
+    scenario 'Authenticated user can not create answer with invalid body', js: true do
       sign_in(user)
 
       visit question_path(question)

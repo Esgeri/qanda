@@ -7,11 +7,11 @@ class AnswersController < ApplicationController
     @answer = @question.answers.build(answer_params)
     @answer.user = current_user
 
-    if @answer.save
-      flash[:notice] = 'Your answer successfully created.'
-      redirect_to @question
-    else
-      render 'questions/show'
+    respond_to do |format|
+      format.js { render @answer.save ? 'create' : 'errors' }
+      format.html do
+        @answer.save ? redirect_to(@question, notice: 'Your answer successfully created.') : render('questions/show')
+      end
     end
   end
 
