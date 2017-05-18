@@ -6,10 +6,7 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.build(answer_params)
     @answer.user = current_user
-
-    respond_to do |format|
-      format.js { render @answer.save ? 'create' : 'errors' }
-    end
+    render @answer.save ? 'create' : 'errors'
   end
 
   def destroy
