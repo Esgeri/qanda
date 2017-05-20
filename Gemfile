@@ -61,7 +61,6 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 group :test, :development do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
-  gem 'selenium-webdriver'
   gem "chromedriver-helper", "1.0.0"
   gem 'database_cleaner'
 end
@@ -70,5 +69,6 @@ group :test do
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
   gem 'capybara'
+  gem 'capybara-webkit', '~> 1.14'
   gem 'launchy'
 end
