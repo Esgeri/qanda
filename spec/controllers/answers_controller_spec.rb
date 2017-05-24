@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:question) { create(:question) }
+  let!(:question) { create(:question) }
 
   describe 'POST #create' do
     sign_in_user
@@ -33,6 +33,55 @@ RSpec.describe AnswersController, type: :controller do
       it 're-renders new view' do
         post :create, params: { answer: attributes_for(:invalid_answer), question_id: question, format: :js }
         expect(response).to render_template :errors
+      end
+    end
+  end
+
+  describe 'PATCH #update' do
+    sign_in_user
+
+    let!(:answer) { create(:answer, question: question, user: @user) }
+
+    context 'as an author edit the answer' do
+      it 'assigns the requested answer to @answer' do
+        patch :update, params: { id: answer, question_id: question, answer: attributes_for(:answer), format: :js }
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'assigns to question' do
+        patch :update, params: { id: answer, question_id: question, answer: attributes_for(:answer), format: :js }
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'changes answer attributes' do
+        patch :update, params: { id: answer, question_id: question, answer: { body: 'new body' } , format: :js }
+        answer.reload
+        expect(answer.body).to eq 'new body'
+      end
+
+      it 'render update template' do
+        patch :update, params: { id: answer, question_id: question, answer: attributes_for(:answer), format: :js }
+        expect(response).to render_template :update
+      end
+    end
+
+    context 'when not the author' do
+      sign_in_user
+
+      let!(:answer) { create(:answer, question: question) }
+
+      it 'no edit answer' do
+        patch :update, params: { id: answer, question_id: question, answer: { body: 'new body' }, format: :js }
+        answer.reload
+        expect(answer.body).to eq answer.body
+      end
+    end
+
+    context 'with invalid attributes' do
+      it 'answer attribute not be nil' do
+        patch :update, params: { id: answer, question_id: question, answer: { body: nil }, format: :js }
+        answer.reload
+        expect(answer.body).to_not be_nil
       end
     end
   end
