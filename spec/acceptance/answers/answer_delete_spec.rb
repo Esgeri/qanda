@@ -20,7 +20,7 @@ feature 'User can delete own answer', %q{
       click_on 'Delete Answer'
 
       expect(current_path).to eq question_path(question)
-      expect(page).to have_content 'Your answer successfully deleted.'
+      # expect(page).to have_content 'Your answer successfully deleted.'
       expect(page).to have_content question.title
       expect(page).to have_content question.body
       expect(page).to_not have_content answer.body
