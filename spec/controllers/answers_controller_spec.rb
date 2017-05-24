@@ -94,13 +94,13 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'delete answer' do
         expect do
-          delete :destroy, params: { id: answer, question_id: question }
+          delete :destroy, params: { id: answer, question_id: question, format: :js }
         end.to change(Answer, :count).by(-1)
       end
 
-      it 'redirects to question show view' do
-        delete :destroy, params: { id: answer, question_id: question }
-        expect(response).to redirect_to question_path(answer.question)
+      it 'render to template destroy on question show view' do
+        delete :destroy, params: { id: answer, question_id: question, format: :js }
+        expect(response).to render_template :destroy
       end
     end
 
@@ -110,13 +110,13 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'can not delete' do
         expect do
-          delete :destroy, params: { id: answer, question_id: question }
+          delete :destroy, params: { id: answer, question_id: question, format: :js }
         end.to_not change(Answer, :count)
       end
 
-      it 'redirects to question show view' do
-        delete :destroy, params: { id: answer, question_id: question }
-        expect(response).to redirect_to question_path(answer.question)
+      it 'render to template destroy on question show view' do
+        delete :destroy, params: { id: answer, question_id: question, format: :js }
+        expect(response).to render_template :destroy
       end
     end
   end
