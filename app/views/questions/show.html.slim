@@ -1,17 +1,31 @@
-h1.title= @question.title
-p.body= @question.body
-- if user_signed_in? && current_user.author_of?(@question)
-  = link_to 'Delete Question', @question, method: :delete, data: { confirm: 'Are you sure?' }
+- if @question.persisted?
+  .question
+    h1 class="question-title-#{@question.id}"
+      = @question.title
+    p class="question-body-#{@question.id}"
+      = @question.body
 
-br
+    - if user_signed_in? && current_user.author_of?(@question)
+      = link_to 'Edit Question', '', class: 'edit-question-link btn btn-xs btn-primary', data: { question_id: @question.id }
+      = link_to 'Delete Question', @question, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-xs btn-danger'
 
-.answers
-  = render @question.answers
+      .edit-question
+        = form_for [@question], remote: true, html: { id: "edit-question-#{@question.id}" } do |f|
+          .question-edit-errors
+          p= f.label :title, 'Question Title'
+          p= f.text_field :title
+          p= f.label :body, 'Question Body'
+          p= f.text_area :body, size: "60x12"
+          = f.submit 'Edit Question', class: 'btn btn-xs btn-primary post-question'
+  br
 
-br
+  .answers
+    = render @question.answers
 
-- if user_signed_in?
-  #answer_form
-    = render 'answers/form'
+  br
+
+  - if user_signed_in?
+    #answer_form
+      = render 'answers/form'
 
 p= link_to 'Back', questions_path
