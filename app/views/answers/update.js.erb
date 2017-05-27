@@ -4,7 +4,9 @@
   <% end %>
 <%  else %>
   $('.answer-edit').html('');
-  $('div.answer-<%= @answer.id %>').html('<%= j @answer.body %>');
+  $('.answer-' + '<%= @answer.id %>').find('#answer_body').html('<%= j @answer.body %>');
+  $('form#edit-answer-' + '<%= @answer.id %>').hide();
+  $('.answer-'+ '<%= @answer.id %>').find('.edit-answer-link').show();
 
   $('.edit-answer-link').click(function(e) {
     e.preventDefault();
