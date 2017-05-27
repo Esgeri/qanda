@@ -120,4 +120,47 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH #mark_best' do
+    context 'Authenticated user' do
+      sign_in_user
+
+      let!(:answer) { create(:answer, question: question, user: @user) }
+      let!(:another_user) { create(:user) }
+      let!(:another_question) { create(:question, user: another_user) }
+      let!(:another_answer) { create(:answer, question: another_question, user: another_user) }
+
+      it 'mark best answer' do
+        patch :mark_best, params: { id: answer, question_id: question, answer: attributes_for(:answer), format: :js }
+        answer.reload
+        expect(answer.best).to eq true
+      end
+
+      it 'no author do not mark answer as best' do
+        patch :mark_best, params: { id: another_answer, question_id: another_question, answer: attributes_for(:answer), format: :js }
+        another_answer.reload
+        expect(another_answer.best).to eq false
+      end
+
+      it 'should be only one best answer' do
+        patch :mark_best, params: { id: answer, question_id: question, answer: attributes_for(:answer), format: :js }
+        answer.reload
+        expect(answer.best).to eq true
+      end
+
+      it 'render best template' do
+        patch :mark_best, params: { id: answer, question_id: question, answer: attributes_for(:answer), format: :js }
+        expect(response).to render_template :mark_best
+      end
+    end
+
+    context 'Unauthenticated user' do
+      let!(:answer) { create(:answer, question: question) }
+      it 'can not mark best answer' do
+        patch :mark_best, params: { id: answer, question_id: question, answer: attributes_for(:answer), format: :js }
+        answer.reload
+        expect(answer.best).to eq false
+      end
+    end
+  end
 end

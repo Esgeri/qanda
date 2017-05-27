@@ -1,5 +1,12 @@
 - if answer.persisted?
   div class="answer-#{answer.id}"
+    - if user_signed_in? && current_user.author_of?(answer)
+      - if answer.best?
+        .best-answer-status
+          p= 'Best answer!'
+      - else
+        = link_to 'Mark as best answer', mark_best_question_answer_path(@question, answer), method: :patch, remote: true
+
     p id="answer_body" = answer.body
 
     - if user_signed_in? && current_user.author_of?(answer)
