@@ -14,13 +14,13 @@ RSpec.describe Answer, type: :model do
     it 'mark best answer' do
       answer.set_best
       answer.reload
-      expect(answer.best).to eq true
+      expect(answer).to be_best
     end
 
     it 'change boolean value of best answer' do
       answer.set_best
       best_answer.reload
-      expect(best_answer.best).to eq false
+      expect(best_answer).to_not be_best
     end
   end
 end
