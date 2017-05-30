@@ -20,7 +20,7 @@ class AnswersController < ApplicationController
 
   def mark_best
     @question = @answer.question
-    if current_user.author_of?(@answer)
+    if current_user.author_of?(@question)
       @answer.set_best
     end
   end
