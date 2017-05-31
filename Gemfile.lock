@@ -69,6 +69,10 @@ GEM
     capybara-webkit (1.14.0)
       capybara (>= 2.3.0, < 2.14.0)
       json
+    carrierwave (1.1.0)
+      activemodel (>= 4.0.0)
+      activesupport (>= 4.0.0)
+      mime-types (>= 1.16)
     chromedriver-helper (1.0.0)
       archive-zip (~> 0.7.0)
       nokogiri (~> 1.6)
@@ -273,6 +277,7 @@ DEPENDENCIES
   byebug
   capybara
   capybara-webkit (~> 1.14)
+  carrierwave
   chromedriver-helper (= 1.0.0)
   coffee-rails (~> 4.2)
   database_cleaner
