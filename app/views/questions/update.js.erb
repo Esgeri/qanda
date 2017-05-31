@@ -4,16 +4,8 @@
   <% end %>
 <% else %>
   $('.question-edit-errors').html('');
-
   $('.question-title-<%= @question.id %>').html('<%= j @question.title %>');
   $('.question-body-<%= @question.id %>').html('<%= j @question.body %>');
   $('form#edit-question-' + <%= @question.id %>).hide();
   $('.edit-question-link').show();
-
-  $('.edit-question-link').click(function(e) {
-    e.preventDefault();
-    $(this).hide();
-    question_id = $(this).data('questionId');
-    $('form#edit-question-' + question_id).show();
-  });
 <% end %>
