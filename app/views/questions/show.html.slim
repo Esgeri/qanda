@@ -9,7 +9,8 @@
       p Attachments:
       ul
         - @question.attachments.each do |a|
-          li= a.file.file.filename
+          li= link_to a.file.identifier, a.file.url
+
       = link_to 'Edit Question', '', class: 'edit-question-link btn btn-xs btn-primary', data: { question_id: @question.id }
       = link_to 'Delete Question', @question, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-xs btn-danger'
 
