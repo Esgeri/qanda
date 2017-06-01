@@ -1,6 +1,13 @@
-h2 Create Answer
-= form_for [@question, @question.answers.build], remote: true do |f|
-  #errors= render 'common/error_messages', resource: @answer if @answer
-  = f.label :body, 'Your Answer'
-  = f.text_area :body
-  = f.submit 'Post Your Answer', class: 'btn btn-primary'
+div class='col-md-8'
+  h2 Create Answer
+  = form_for [@question, @answer], remote: true do |f|
+    .answer-errors
+    div class='form-group'
+      = f.label :body, 'Your Answer'
+      = f.text_area :body, class: 'form-control'
+    div class='form-group'
+      = f.fields_for :attachments do |a|
+        = a.label :file
+        = a.file_field :file
+    div class='form-group'
+      = f.submit 'Post Your Answer', class: 'btn btn-primary'

@@ -10,6 +10,11 @@
     p id="answer_body" = answer.body
 
     - if user_signed_in? && current_user.author_of?(answer)
+      - if answer.attachments.any?
+        p Attachments:
+        ul
+          - answer.attachments.each do |a|
+            li= link_to a.file.identifier, a.file.url
       .btn-group
         = link_to 'Edit Answer', ' ', class: 'edit-answer-link btn btn-xs btn-primary', data: { answer_id: answer.id }
         = link_to 'Delete Answer', question_answer_path(@question, answer), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class: 'btn btn-xs btn-danger'
@@ -18,6 +23,5 @@
         = form_for [@question, answer], remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
           .answer-edit
           p= f.label :body, 'Your Answer'
-          p= f.text_area :body
+          p= f.text_area :body, class: 'form-control'
           = f.submit 'Post Your Answer', class: 'btn btn-xs btn-primary post-answer'
-  hr
