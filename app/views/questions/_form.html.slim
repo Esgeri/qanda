@@ -6,9 +6,6 @@
   p
     = f.label :body
     = f.text_area :body, size: "60x12"
-  p Attachments:
+    = render 'common/attachment_form', f: f
   p
-    = f.fields_for :attachments do |a|
-      = a.label :file
-      = a.file_field :file
-  p= f.submit 'Create', class: 'btn btn-xs btn-primary'
+    = f.submit 'Create', class: 'btn btn-xs btn-primary'
