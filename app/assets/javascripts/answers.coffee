@@ -8,7 +8,6 @@ ready = ->
     $(this).hide()
     answer_id = $(this).data('answerId')
     $('form#edit-answer-' + answer_id).show()
-    return
 
 $(document).ready(ready)
 $(document).on('page-load', ready)

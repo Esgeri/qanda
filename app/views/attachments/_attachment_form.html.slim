@@ -1,0 +1,6 @@
+h4 Attachments:
+.attachments
+  = f.fields_for :attachments do |a|
+    = render 'attachments/attachment_field', f: a
+    .links
+      = link_to_add_association 'Show attachment form', f, :attachments, partial: 'attachments/attachment_field'

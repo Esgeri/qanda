@@ -1,10 +1,10 @@
 .attachment_list
   - if item.attachments.any?
-    h4.attachment-head Attachments:
-    .attachments
-      ul
-        - item.attachments.each do |a|
-          li class="attachment-file-#{a.id}"
+    ul
+      - item.attachments.each do |a|
+        li class="attachment-file-#{a.id}"
+          h4.attachment-head Attachments:
+          .attachments
             = link_to a.file.identifier, a.file.url
             - if user_signed_in? && current_user.author_of?(a.attachable)
               p= link_to 'Delete file', a, method: :delete, data: { confirm: 'Are you sure?' }, remote: true

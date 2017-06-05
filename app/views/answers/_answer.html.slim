@@ -10,7 +10,7 @@
     p id="answer_body" = answer.body
 
     - if user_signed_in? && current_user.author_of?(answer)
-      = render 'common/attachment_list', item: answer
+      = render 'attachments/attachment_list', item: answer
 
       .btn-group
         = link_to 'Edit Answer', ' ', class: 'edit-answer-link btn btn-xs btn-primary', data: { answer_id: answer.id }

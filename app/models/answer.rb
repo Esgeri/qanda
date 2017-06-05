@@ -7,7 +7,7 @@ class Answer < ApplicationRecord
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
-  scope :on_top, -> { order(best: :desc, created_at: :desc) }
+  scope :on_top, -> { order(best: :desc, created_at: :asc) }
 
   def set_best
     Answer.transaction do
