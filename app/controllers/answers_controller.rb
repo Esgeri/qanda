@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
+  include PublicAccess
   before_action :load_question, only: [:new, :create, :destroy]
   before_action :load_answer, only: [:update, :destroy, :mark_best]
 
