@@ -1,8 +1,7 @@
 class Question < ApplicationRecord
   include Attachable
-
+  include HasUser
   has_many :answers, dependent: :destroy
-  belongs_to :user
 
   validates :title, :body, presence: true
 end
