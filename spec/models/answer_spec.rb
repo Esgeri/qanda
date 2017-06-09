@@ -1,12 +1,18 @@
 require 'rails_helper'
+require_relative 'concerns/votable_spec.rb'
 
 RSpec.describe Answer, type: :model do
   it_behaves_like 'has_user'
   it_behaves_like 'attachable'
+  it_behaves_like 'votable'
 
-  it { should belong_to :question }
+  describe 'associations' do
+    it { should belong_to :question }
+  end
 
-  it { should validate_presence_of :body }
+  describe 'validations' do
+    it { should validate_presence_of :body }
+  end
 
   describe 'best answer' do
     let!(:user) { create(:user) }
