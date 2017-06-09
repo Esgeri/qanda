@@ -1,8 +1,9 @@
 class Answer < ApplicationRecord
   include Attachable
   include HasUser
+  include Votable
+
   belongs_to :question
-  belongs_to :user, optional: true
 
   validates :body, presence: true
 

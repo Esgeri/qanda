@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :answers do
       patch :mark_best, on: :member
     end
+    patch :set_like, on: :member
   end
 
   resources :attachments, only: [:destroy]
