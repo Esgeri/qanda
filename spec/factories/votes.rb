@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :vote do
-    is_liked false
+    value 0
   end
 end
