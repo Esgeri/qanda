@@ -8,27 +8,19 @@ module Votable
   end
 
   def like_by(user)
-    unless voted_by?(user)
-      votes.create(is_liked: true, user: user)
-      self.rating += 1
-      self.save
-    end
+    self.votes.create(value: 1, user: user)
   end
 
   def dislike_by(user)
-    unless voted_by?(user)
-      votes.create(is_liked: false, user: user)
-      self.rating -= 1
-      self.save
-    end
+    self.votes.create(value: -1, user: user)
   end
 
   def unvote(user)
-    if voted_by?(user)
-      vote = votes.where(user: user).first
-      vote.is_liked ? self.rating -= 1 : self.rating += 1
-      vote.destroy
-    end
+    self.votes.where(user: user).delete_all
+  end
+
+  def rating
+    votes.sum(:value)
   end
 
   def voted_by?(user)
