@@ -1,6 +1,8 @@
 class QuestionsController < ApplicationController
-  include PublicAccess
   before_action :load_question, only: [:show, :edit, :update, :destroy]
+
+  include PublicAccess
+  include Votes
 
   def index
     @questions = Question.all

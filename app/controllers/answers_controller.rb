@@ -1,7 +1,9 @@
 class AnswersController < ApplicationController
-  include PublicAccess
-  before_action :load_question, only: [:new, :create, :destroy]
+  before_action :load_question, only: [:new, :create]
   before_action :load_answer, only: [:update, :destroy, :mark_best]
+
+  include PublicAccess
+  include Votes
 
   def create
     @answer = @question.answers.build(answer_params)

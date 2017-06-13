@@ -1,11 +1,20 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  resources :questions do
-    resources :answers do
-      patch :mark_best, on: :member
+  concern :votable do
+    member do
+      patch :set_like
+      patch :set_dislike
+      delete :cancel_vote
     end
-    patch :set_like, on: :member
+  end
+
+  resources :questions do
+    resources :answers, shallow: true do
+      patch :mark_best, on: :member
+      concerns :votable
+    end
+    concerns :votable
   end
 
   resources :attachments, only: [:destroy]

@@ -164,4 +164,55 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH #vote' do
+    let(:author) { create(:user) }
+    let(:question) { create(:question, user: author) }
+    let(:another_user) { create(:user) }
+
+    context 'author of question can not vote' do
+      before { sign_in(author) }
+
+      it 'should not vote like' do
+        patch :set_like, params: { id: question.id }, format: :json
+        expect { patch :set_like, params: { id: question.id }, format: :json }.to_not change(question.votes, :count)
+      end
+
+      it 'should not vote dislike' do
+        patch :set_dislike, params: { id: question.id }, format: :json
+        expect { patch :set_dislike, params: { id: question.id }, format: :json }.to_not change(question.votes, :count)
+      end
+    end
+
+    context 'no author can vote' do
+      before { sign_in(another_user) }
+
+      it 'should vote like' do
+        expect { patch :set_like, params: { id: question.id }, format: :json }.to change(question.votes, :count).by(1)
+      end
+
+      it 'should vote dislike' do
+        expect { patch :set_dislike, params: { id: question.id }, format: :json }.to change(question.votes, :count).by(1)
+      end
+
+      it 'should vote like one time' do
+        patch :set_like, params: { id: question.id }, format: :json
+        expect { patch :set_like, params: { id: question.id }, format: :json }.to_not change(question.votes, :count)
+      end
+
+      it 'should vote dislike one time' do
+        patch :set_dislike, params: { id: question.id }, format: :json
+        expect { patch :set_dislike, params: { id: question.id }, format: :json }.to_not change(question.votes, :count)
+      end
+    end
+
+    context 'only no author can unvote' do
+      before { sign_in(another_user) }
+
+      it 'should unvote' do
+        patch :set_like, params: { id: question.id }, format: :json
+        expect { delete :cancel_vote, params: { id: question.id }, format: :json }.to change(question.votes, :count).by(-1)
+      end
+    end
+  end
 end
