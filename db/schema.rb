@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170610090252) do
+ActiveRecord::Schema.define(version: 20170613105034) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,9 +22,7 @@ ActiveRecord::Schema.define(version: 20170610090252) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.boolean "best", default: false, null: false
-    t.integer "rating", default: 0
     t.index ["question_id"], name: "index_answers_on_question_id"
-    t.index ["rating"], name: "index_answers_on_rating"
     t.index ["user_id"], name: "index_answers_on_user_id"
   end
 
@@ -43,8 +41,6 @@ ActiveRecord::Schema.define(version: 20170610090252) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
-    t.integer "rating", default: 0
-    t.index ["rating"], name: "index_questions_on_rating"
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
 
