@@ -1,5 +1,9 @@
 - if @question.persisted?
   .question
+    - if user_signed_in?
+      .rating
+        = render 'votes/vote', votable: @question
+
     h1 class="question-title-#{@question.id}"
       = @question.title
     p class="question-body-#{@question.id}"

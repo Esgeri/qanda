@@ -1,0 +1,12 @@
+- votable_klass = votable.class.name.downcase
+div class="#{votable_klass}-errors"
+div class="#{votable_klass}-rating-#{votable.id}" = "Rating: #{votable.rating}"
+
+- if !current_user.author_of?(votable)
+  .rating-links
+    = link_to polymorphic_path([:set_like, votable]), method: :patch, remote: true, data: { type: :json }, class: 'btn like' do
+        span.glyphicon.glyphicon-thumbs-up
+    = link_to polymorphic_path([:set_dislike, votable]), method: :patch, remote: true, data: { type: :json }, class: 'btn dislike' do
+        span.glyphicon.glyphicon-thumbs-down
+    = link_to polymorphic_path([:cancel_vote, votable]), method: :delete, remote: true, data: { type: :json }, class: 'btn cancel_vote' do
+        span.glyphicon.glyphicon-remove
