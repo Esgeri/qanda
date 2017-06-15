@@ -7,11 +7,12 @@ ready = ->
 
   $('.like, .dislike, .cancel_vote').bind 'ajax:success', (e, data, status, xhr) ->
     response = $.parseJSON(xhr.responseText)
-    if(response.status == 'success')
+    if(response.status == 200)
       $('#answer-' + response.id + '.answer-errors').empty()
       $('.answer-rating-' + response.id).html('Rating: ' + response.rating)
-    else
-      $('#answer-' + response.id + '.answer-errors').html(response.data)
+  .bind 'ajax:error', (e, status, xhr, error) ->
+    response = $.parseJSON(xhr.responseText)
+    $('#answer-' + response.id + '.answer-errors').html(response.data)
 
 $(document).ready(ready)
 $(document).on('page-load', ready)
