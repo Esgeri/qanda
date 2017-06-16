@@ -8,7 +8,7 @@ module Votes
 
   def set_like
     if has_vote?
-      render json: { data: 'You can vote only once!' }, status: :forbidden
+      render json: { data: 'You can vote only once!' }, status: 403
     else
       @votable.like_by(current_user)
       render json: { id: @votable.id, rating: @votable.rating },  status: 200
@@ -17,7 +17,7 @@ module Votes
 
   def set_dislike
     if has_vote?
-      render json: { data: 'You can vote only once!' }, status: :forbidden
+      render json: { data: 'You can vote only once!' }, status: 403
     else
       @votable.dislike_by(current_user)
       render json: { id: @votable.id, rating: @votable.rating }, status: 200
@@ -29,7 +29,7 @@ module Votes
       @votable.unvote(current_user)
       render json: { id: @votable.id, rating: @votable.rating }, status: 200
     else
-      render json: { data: 'Need vote first!' }, status: :forbidden
+      render json: { data: 'Need vote first!' }, status: 403
     end
   end
 
@@ -45,7 +45,7 @@ module Votes
 
   def check_author_of
     if current_user.author_of?(@votable)
-      render json: { data: 'You can not vote. Because you owner!' }, status: :forbidden
+      render json: { data: 'You can not vote. Because you owner!' }, status: 403
     end
   end
 
