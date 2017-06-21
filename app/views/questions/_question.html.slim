@@ -1,0 +1,6 @@
+h3.question_title
+  = link_to question.title, question
+h5.question-rating
+  = "Rating: #{question.rating}"
+h5.question-answers
+  = "Answers count: #{question.answers.count}"

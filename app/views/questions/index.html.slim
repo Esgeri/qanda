@@ -2,6 +2,6 @@ h1 All Questions
 
 p= link_to 'Ask Question', new_question_path
 
-- @questions.each do |question|
-  .title= link_to question.title, question
-  .body= question.body
+section.questions-list
+  - @questions.each do |question|
+    = render 'questions/question', question: question
