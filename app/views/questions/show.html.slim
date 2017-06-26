@@ -1,17 +1,17 @@
 - if @question.persisted?
-  .question
-    - if user_signed_in?
-      .rating
-        = render 'votes/vote', votable: @question
+  .question data-id="#{@question.id}"
+    .rating
+      = render 'votes/vote', votable: @question
 
     h1 class="question-title-#{@question.id}"
       = @question.title
     p class="question-body-#{@question.id}"
       = @question.body
 
-    - if user_signed_in? && current_user.author_of?(@question)
+    .attachment_list
       = render 'attachments/attachment_list', item: @question
 
+    - if user_signed_in? && current_user.author_of?(@question)
       = link_to 'Edit Question', '', class: 'edit-question-link btn btn-xs btn-primary', data: { question_id: @question.id }
       = link_to 'Delete Question', @question, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-xs btn-danger'
 
@@ -34,5 +34,6 @@
     #answer_form
       = render 'answers/form'
 
+br
 div.nav-links
   p= link_to 'Back', questions_path

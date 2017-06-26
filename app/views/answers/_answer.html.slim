@@ -7,15 +7,15 @@
       - else
         = link_to 'Mark as best answer', mark_best_answer_path(answer), method: :patch, remote: true
 
-    - if user_signed_in?
-      .rating
-        = render 'votes/vote', votable: answer
+    .rating
+      = render 'votes/vote', votable: answer
 
     p id="answer_body" = answer.body
 
-    - if user_signed_in? && current_user.author_of?(answer)
+    .attachment_list
       = render 'attachments/attachment_list', item: answer
 
+    - if user_signed_in? && current_user.author_of?(answer)
       .btn-group
         = link_to 'Edit Answer', ' ', class: 'edit-answer-link btn btn-xs btn-primary', data: { answer_id: answer.id }
         = link_to 'Delete Answer', answer_path(answer), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class: 'btn btn-xs btn-danger'

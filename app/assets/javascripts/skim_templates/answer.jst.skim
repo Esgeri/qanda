@@ -1,0 +1,10 @@
+- if @answer.user_id != gon.user_id
+  div class="answer-#{@answer.id}"
+    - if gon.user_id == gon.question_user_id
+      - if @answer.best?
+        .best-answer-status
+          h4= 'Best answer!'
+      - else
+        a.button data-remote="true" rel="nofollow" data-method="patch" href="/answers/#{@answer.id}/mark_best" Mark as best answer
+
+p id="answer_body" = @answer.body

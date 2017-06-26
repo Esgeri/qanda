@@ -61,6 +61,8 @@ class QuestionsController < ApplicationController
 
   def load_question
     @question = Question.find(params[:id])
+    gon.question_id = @question.id
+    gon.question_user_id = @question.user_id
   end
 
   def question_params

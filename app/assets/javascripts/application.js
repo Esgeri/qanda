@@ -16,6 +16,7 @@
 //= require cocoon
 //= require action_cable
 //= require twitter/bootstrap
+//= require skim
 //= require turbolinks
 //= require_tree .
 

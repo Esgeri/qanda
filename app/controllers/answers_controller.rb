@@ -1,6 +1,7 @@
 class AnswersController < ApplicationController
   before_action :load_question, only: [:new, :create]
   before_action :load_answer, only: [:update, :destroy, :mark_best]
+  after_action :publish_answer, only: [:create]
 
   include PublicAccess
   include Votes
@@ -28,6 +29,11 @@ class AnswersController < ApplicationController
   end
 
   private
+
+  def publish_answer
+    return if @answer.errors.any?
+    ActionCable.server.broadcast("questions/#{@answer.question_id}/answers", @answer)
+  end
 
   def load_question
     @question = Question.find(params[:question_id])
