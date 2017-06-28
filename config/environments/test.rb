@@ -26,6 +26,7 @@ Rails.application.configure do
   config.action_dispatch.show_exceptions = false
 
   config.action_cable.disable_request_forgery_protection = true
+  config.action_cable.allowed_request_origins = ["ws://localhost:3000/cable"]
 
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false

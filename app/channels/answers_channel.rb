@@ -1,5 +1,5 @@
 class AnswersChannel < ApplicationCable::Channel
-  def subscribe(data)
-    stream_from "questions/#{data['question_id']}/answers"
+  def subscribed
+    stream_from 'answers'
   end
 end

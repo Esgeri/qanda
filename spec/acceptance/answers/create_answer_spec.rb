@@ -49,16 +49,17 @@ feature 'Create answer', %q{
         end
 
         Capybara.using_session('user') do
-          click_on 'Ask Question'
-          fill_in 'Title', with: 'Test question'
-          fill_in 'Body', with: 'text text'
-          click_on 'Create'
+          visit question_path(question)
+          fill_in 'Your Answer', with: 'Ask Google!'
+          click_on 'Post Your Answer'
 
-          expect(page).to have_content 'Test question'
+          within '.answers' do
+            expect(page).to have_content 'Ask Google!'
+          end
         end
 
         Capybara.using_session('quest') do
-          expect(page).to have_content 'Test question'
+          expect(page).to have_content 'Ask Google!'
         end
       end
     end

@@ -1,10 +1,27 @@
 - if @answer.user_id != gon.user_id
   div class="answer-#{@answer.id}"
     - if gon.user_id == gon.question_user_id
-      - if @answer.best?
-        .best-answer-status
-          h4= 'Best answer!'
-      - else
-        a.button data-remote="true" rel="nofollow" data-method="patch" href="/answers/#{@answer.id}/mark_best" Mark as best answer
+      a.button data-remote="true" rel="nofollow" data-method="patch" href="/answers/#{@answer.id}/mark_best" Mark as best answer
 
-p id="answer_body" = @answer.body
+    .rating
+      div class="#{@answer}-rating-#{@answer.id}" = "Rating: #{@rating}"
+
+      - if gon.user_id && gon.user_id != @answer.user_id
+        .rating-links
+          a.btn data-method="patch" data-remote="true" href="/answer/#{@answer.id}/set_like" rel="nofollow" format="json"
+            span.glyphicon.glyphicon-thumbs-up
+          a.btn data-method="patch" data-remote="true" href="/answer/#{@answer.id}/set_dislike" rel="nofollow" format="json"
+            span.glyphicon.glyphicon-thumbs-down
+          a.btn data-method="patch" data-remote="true" href="/answer/#{@answer.id}/cancel_vote" rel="nofollow" format="json"
+            span.glyphicon.glyphicon-thumbs-remove
+
+    p id="answer_body" = @answer.body
+
+    .attachment_list
+      ul
+        - for attachment in @attachments
+          li class="attachment-file-#{attachment.id}"
+            h4.attachment-head Attachments:
+            .attachments
+              - [_, ..., file_name] = attachment.file.url.split('/')
+              a href="#{attachment.file.url}"#{file_name}

@@ -2,7 +2,7 @@
 div class="#{votable_klass}-errors"
 div class="#{votable_klass}-rating-#{votable.id}" = "Rating: #{votable.rating}"
 
-- if !current_user.author_of?(votable)
+- if user_signed_in? && !current_user.author_of?(votable)
   .rating-links
     = link_to polymorphic_path([:set_like, votable]), method: :patch, remote: true, data: { type: :json }, class: 'btn like' do
         span.glyphicon.glyphicon-thumbs-up
