@@ -8,3 +8,5 @@ div class='col-md-8'
       = render 'attachments/attachment_form', f: f
     div class='form-group'
       = f.submit 'Post Your Answer', class: 'btn btn-primary'
+
+  = link_to 'Back', questions_path
