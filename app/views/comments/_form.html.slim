@@ -1,0 +1,7 @@
+= link_to 'Add comment', ' ', class: 'add-comment-link', data: { commentable_id: commentable.id, commentable_class: commentable.class.name.underscore }
+
+= form_for [commentable, commentable.comments.build], html: {class: 'new-comment-form', id: "new-#{commentable.class.to_s.downcase}-#{commentable.id}-comment", style: "display: none" }, remote: true do |f|
+  = f.label :body, 'Your Comment'
+  .comment-errors
+  p = f.text_area :body, class: 'new-comment-body'
+  = f.submit 'Save Comment', class: 'btn btn-info btn-sm'

@@ -11,6 +11,15 @@
     .attachment_list
       = render 'attachments/attachment_list', item: @question
 
+    .comments
+      p Comments:
+      div class="comments-question-#{@question.id}"
+        = render @question.comments
+
+    .new-comment
+      - if user_signed_in?
+        = render 'comments/form', commentable: @question
+
     - if user_signed_in? && current_user.author_of?(@question)
       = link_to 'Edit Question', '', class: 'edit-question-link btn btn-xs btn-primary', data: { question_id: @question.id }
       = link_to 'Delete Question', @question, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-xs btn-danger'

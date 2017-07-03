@@ -15,6 +15,15 @@
     .attachment_list
       = render 'attachments/attachment_list', item: answer
 
+    .comments
+      p Comments:
+      div class="comments-answer-#{answer.id}"
+        = render answer.comments
+
+      .new-comment
+        - if user_signed_in?
+          = render 'comments/form', commentable: answer
+
     - if user_signed_in? && current_user.author_of?(answer)
       .btn-group
         = link_to 'Edit Answer', ' ', class: 'edit-answer-link btn btn-xs btn-primary', data: { answer_id: answer.id }
