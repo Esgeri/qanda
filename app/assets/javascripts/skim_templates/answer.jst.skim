@@ -25,3 +25,19 @@
             .attachments
               - [_, ..., file_name] = attachment.file.url.split('/')
               a href="#{attachment.file.url}"#{file_name}
+
+    .comments
+      p Comments:
+      div class="comments-answer-#{@answer.id}"
+
+      .new-comment
+        - if gon.user_id
+          a class='add-comment-link' data-commentable-class='answer' data-commentable-id="#{@answer.id}" href='' = 'Add comment'
+
+          form id="new-answer-#{@answer.id}-comment" class="new_comment" action="/answers/#{@answer.id}/comments" accept-charset="UTF-8" data-remote="true" method="post"
+            p
+              label for="comment_body" Your Comment
+            div class="comment-errors"
+            p
+              textarea class="new-comment-body" name="comment[body]" id="comment_body"
+            input type="submit" name="commit" value="Save Comment" data-disable-with="Save Comment" class="btn btn-info btn-sm"

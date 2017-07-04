@@ -58,4 +58,40 @@ feature 'Add comment to an answer', %q{
       expect(page).to have_no_link 'Add Comment'
     end
   end
+
+  context 'multiple sessions', js: true do
+    scenario "answer's comments appear on another user's page" do
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        within '.answers' do
+          find('.add-comment-link').trigger('click')
+        end
+
+        within '.answers .new-comment' do
+          fill_in 'Your Comment', with: 'New Comment'
+          click_on 'Save Comment'
+
+          expect(page).to have_no_selector 'textarea'
+        end
+
+        within '.answers .comments' do
+          expect(page).to have_content 'New Comment'
+        end
+      end
+
+      Capybara.using_session('guest') do
+        within '.answers .comments' do
+          expect(page).to have_content 'New Comment'
+        end
+      end
+    end
+  end
 end
