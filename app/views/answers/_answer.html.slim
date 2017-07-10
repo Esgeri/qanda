@@ -18,7 +18,7 @@
     .comments
       p Comments:
       div class="comments-answer-#{answer.id}"
-        = render answer.comments
+        = render answer.comments.on_created_at
 
       .new-comment
         - if user_signed_in?

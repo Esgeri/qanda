@@ -5,5 +5,5 @@ class Comment < ApplicationRecord
 
   validates :body, presence: true
 
-  scope :on_created_at, -> { order(:created_at) }
+  scope :on_created_at, -> { order(created_at: :asc) }
 end
