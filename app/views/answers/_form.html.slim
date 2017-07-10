@@ -5,7 +5,7 @@ div class='col-md-8'
     div class='form-group'
       = f.label :body, 'Your Answer'
       = f.text_area :body, class: 'form-control'
-      = render 'attachments/attachment_form', f: f
+      = render 'attachments/attachment_form', f: f, attachable: @answer
     div class='form-group'
       = f.submit 'Post Your Answer', class: 'btn btn-primary'
 

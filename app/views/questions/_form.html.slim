@@ -6,6 +6,6 @@
   p
     = f.label :body
     = f.text_area :body, size: "60x12"
-    = render 'attachments/attachment_form', f: f
+    = render 'attachments/attachment_form', f: f, attachable: @question
   p
     = f.submit 'Create', class: 'btn btn-xs btn-primary'

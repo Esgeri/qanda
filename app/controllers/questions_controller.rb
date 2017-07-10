@@ -1,49 +1,41 @@
 class QuestionsController < ApplicationController
   before_action :load_question, only: [:show, :edit, :update, :destroy]
+  before_action :set_gon_variable, only: [:show]
+  before_action :build_answer, only: [:show]
+  before_action :verify_authorship, only: [:edit, :update, :destroy]
 
   after_action :publish_question, only: [:create]
 
   include PublicAccess
   include Votes
 
+  respond_to :js
+
   def index
-    @questions = Question.all
+    respond_with(@questions = Question.all)
   end
 
   def show
-    @answer = @question.answers.build
-    @answer.attachments.build
+    respond_with @question
   end
 
   def new
-    @question = Question.new
-    @question.attachments.build
+    respond_with(@question = Question.new)
   end
 
   def edit; end
 
   def create
-    @question = current_user.questions.new(question_params)
-
-    if @question.save
-      flash[:notice] = 'Your question successfully created.'
-      redirect_to @question
-    else
-      flash[:notice] = 'Your question is not created.'
-      render :new
-    end
+    respond_with(@question = current_user.questions.create(question_params))
   end
 
   def update
-    @question.update(question_params) if current_user.author_of?(@question)
+    @question.update(question_params)
+    respond_with(@question)
   end
 
   def destroy
-    if current_user.author_of?(@question)
-      @question.destroy
-      flash[:notice] = 'Your question successfully deleted.'
-    end
-    redirect_to questions_path
+    respond_with(@question.destroy)
   end
 
   private
@@ -59,8 +51,22 @@ class QuestionsController < ApplicationController
     )
   end
 
+  def verify_authorship
+    unless current_user.author_of?(@question)
+      flash[:error] = 'You have no permission to do this action'
+      redirect_to questions_path
+    end
+  end
+
+  def build_answer
+    @answer = @question.answers.build
+  end
+
   def load_question
     @question = Question.find(params[:id])
+  end
+
+  def set_gon_variable
     gon.question_id = @question.id
     gon.question_user_id = @question.user_id
   end
