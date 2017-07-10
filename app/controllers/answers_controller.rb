@@ -1,31 +1,31 @@
 class AnswersController < ApplicationController
   before_action :load_question, only: [:new, :create]
   before_action :load_answer, only: [:update, :destroy, :mark_best]
+  before_action :verify_answer_authorship, only: [:update, :destroy]
+  before_action :verify_question_authorship, only: [:mark_best]
+
   after_action :publish_answer, only: [:create]
 
   include PublicAccess
   include Votes
 
+  respond_to :js
+
   def create
-    @answer = @question.answers.build(answer_params)
-    @answer.user = current_user
-    @answer.save
+    respond_with(@answer = @question.answers.create(answer_params.merge(user: current_user)))
   end
 
   def update
-    @answer.update(answer_params) if current_user.author_of?(@answer)
-    @question = @answer.question
+    @answer.update(answer_params)
+    respond_with(@answer)
   end
 
   def destroy
-    @answer.destroy if current_user.author_of?(@answer)
+    respond_with(@answer.destroy)
   end
 
   def mark_best
-    @question = @answer.question
-    if current_user.author_of?(@question)
-      @answer.set_best
-    end
+    respond_with(@answer.set_best)
   end
 
   private
@@ -45,6 +45,19 @@ class AnswersController < ApplicationController
 
   def load_answer
     @answer = Answer.find(params[:id])
+    @question = @answer.question
+  end
+
+  def verify_answer_authorship
+    unless current_user.author_of?(@answer)
+      render :destroy
+    end
+  end
+
+  def verify_question_authorship
+    unless current_user.author_of?(@question)
+      render :mark_best
+    end
   end
 
   def answer_params
