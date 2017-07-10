@@ -7,7 +7,7 @@ ready = ->
     $('form#new-' + commentableClass + '-' + commentableId + '-comment').show()
 
   $('body').on 'ajax:success', '.new-comment', (e, data, status, xhr) ->
-    comment = xhr.responseJSON.comment
+    comment = xhr.responseJSON
     comments = '.comments-' + comment.commentable_type.toLowerCase() + '-' + comment.commentable_id
     $(comments).append('<p comment_body>' + comment.body + '</p>')
     $('.comment-errors').html('')
@@ -15,7 +15,7 @@ ready = ->
     $('form#new-' + comment.commentable_type.toLowerCase() + '-' + comment.commentable_id + '-comment').hide()
     $('.add-comment-link').show()
   .on 'ajax:error', '.new-comment', (e, xhr, status, error) ->
-    errors = xhr.responseJSON
+    errors = xhr.responseJSON.errors
     $.each errors, (index, value) ->
       $('.comment-errors').html('<p>' + value + '</p>')
 

@@ -34,7 +34,7 @@
         - if gon.user_id
           a class='add-comment-link' data-commentable-class='answer' data-commentable-id="#{@answer.id}" href='' = 'Add comment'
 
-          form id="new-answer-#{@answer.id}-comment" class="new_comment" action="/answers/#{@answer.id}/comments" accept-charset="UTF-8" data-remote="true" method="post"
+          form id="new-answer-#{@answer.id}-comment" class="new_comment" action="/answers/#{@answer.id}/comments" accept-charset="UTF-8" data-remote="true" data-type='json' method="post"
             p
               label for="comment_body" Your Comment
             div class="comment-errors"
