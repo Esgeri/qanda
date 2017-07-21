@@ -3,6 +3,10 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     define_oauth_from(:facebook)
   end
 
+  def twitter
+    define_oauth_from(:twitter)
+  end
+
   private
 
   def define_oauth_from(provider)
