@@ -22,3 +22,4 @@ config/database.yml
 
 /public/uploads
 /public/tmp
+/config/secrets.yml
