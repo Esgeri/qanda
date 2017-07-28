@@ -72,6 +72,8 @@ group :test, :development do
   gem 'factory_girl_rails'
   gem "chromedriver-helper", "1.0.0"
   gem 'database_cleaner'
+  gem 'letter_opener'
+  gem 'capybara-email'
 end
 
 group :test do

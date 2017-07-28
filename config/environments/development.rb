@@ -56,4 +56,6 @@ Rails.application.configure do
 
   config.action_cable.disable_request_forgery_protection = true
   config.action_cable.allowed_request_origins = ["ws://localhost:3000/cable"]
+
+  config.action_mailer.delivery_method = :letter_opener
 end
