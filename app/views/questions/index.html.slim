@@ -1,6 +1,7 @@
 h1 All Questions
 
-p= link_to 'Ask Question', new_question_path
+- if can?(:create, Question)
+  p= link_to 'Ask Question', new_question_path
 
 .questions-list
   - @questions.each do |question|

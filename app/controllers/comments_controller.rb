@@ -6,6 +6,8 @@ class CommentsController < ApplicationController
 
   respond_to :json, only: [:create]
 
+  authorize_resource
+
   def create
     @comment = @commentable.comments.create(comment_params.merge(user: current_user))
     respond_with(@comment, location: @commentable, status: :ok)

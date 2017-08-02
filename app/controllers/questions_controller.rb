@@ -2,7 +2,6 @@ class QuestionsController < ApplicationController
   before_action :load_question, only: [:show, :edit, :update, :destroy]
   before_action :set_gon_variable, only: [:show]
   before_action :build_answer, only: [:show]
-  before_action :verify_authorship, only: [:edit, :update, :destroy]
 
   after_action :publish_question, only: [:create]
 
@@ -10,6 +9,8 @@ class QuestionsController < ApplicationController
   include Votes
 
   respond_to :js
+
+  authorize_resource
 
   def index
     respond_with(@questions = Question.all)
@@ -49,13 +50,6 @@ class QuestionsController < ApplicationController
         locals: { question: @question }
       )
     )
-  end
-
-  def verify_authorship
-    unless current_user.author_of?(@question)
-      flash[:error] = 'You have no permission to do this action'
-      redirect_to questions_path
-    end
   end
 
   def build_answer

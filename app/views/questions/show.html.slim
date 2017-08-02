@@ -17,10 +17,10 @@
         = render @question.comments.on_created_at
 
     .new-comment
-      - if user_signed_in?
+      - if can?(:create, Comment)
         = render 'comments/form', commentable: @question
 
-    - if user_signed_in? && current_user.author_of?(@question)
+    - if can?(:update, @question) && can?(:destroy, @question)
       = link_to 'Edit Question', '', class: 'edit-question-link btn btn-xs btn-primary', data: { question_id: @question.id }
       = link_to 'Delete Question', @question, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-xs btn-danger'
 
@@ -39,6 +39,6 @@
 
   br
 
-  - if user_signed_in?
+  - if can?(:create, Answer)
     #answer_form
       = render 'answers/form'

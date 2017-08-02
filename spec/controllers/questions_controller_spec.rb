@@ -93,9 +93,9 @@ RSpec.describe QuestionsController, type: :controller do
         expect(question.body).to eq question.body
       end
 
-      it 'render template to updated question' do
+      it 'redirects to root path' do
         patch :update, params: { id: question, question: { title: 'new title', body: 'new body' }, format: :js }
-        expect(response).to redirect_to questions_path
+        expect(response).to redirect_to root_path
       end
     end
 
@@ -108,8 +108,8 @@ RSpec.describe QuestionsController, type: :controller do
         expect(question.body).to eq question.body
       end
 
-      it 're-renders update template' do
-        expect(response).to redirect_to questions_path
+      it 'renders root path' do
+        expect(response).to redirect_to root_path
       end
     end
 
@@ -150,9 +150,9 @@ RSpec.describe QuestionsController, type: :controller do
         expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
       end
 
-      it 'redirects to question show view' do
+      it 'redirects to root path' do
         delete :destroy, params: { id: question }
-        expect(response).to redirect_to questions_path
+        expect(response).to redirect_to root_path
       end
     end
   end
