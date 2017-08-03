@@ -1,6 +1,7 @@
 class AttachmentsController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_attachment
+
+  include PublicAccess
 
   respond_to :js
 
