@@ -30,9 +30,9 @@ RSpec.describe AttachmentsController, type: :controller do
           expect { delete :destroy, params: { id: question_attachment }, format: :js }.to_not change(question.attachments, :count)
         end
 
-        it 'render template' do
+        it 'sends 403 status' do
           delete :destroy, params: { id: question_attachment }, format: :js
-          expect(response).to redirect_to root_path
+          expect(response).to have_http_status(403)
         end
       end
 
@@ -76,9 +76,9 @@ RSpec.describe AttachmentsController, type: :controller do
           expect { delete :destroy, params: { id: answer_attachment }, format: :js }.to_not change(answer.attachments, :count)
         end
 
-        it 'render template' do
+        it 'sends 403 status' do
           delete :destroy, params: { id: answer_attachment }, format: :js
-          expect(response).to redirect_to root_path
+          expect(response).to have_http_status(403)
         end
       end
 

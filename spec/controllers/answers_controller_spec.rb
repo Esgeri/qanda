@@ -114,9 +114,9 @@ RSpec.describe AnswersController, type: :controller do
         end.to_not change(Answer, :count)
       end
 
-      it 'render to template destroy on question show view' do
+      it 'sends 403 status' do
         delete :destroy, params: { id: answer, question_id: question, format: :js }
-        expect(response).to redirect_to root_path
+        expect(response).to have_http_status(403)
       end
     end
   end
@@ -150,7 +150,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'render best template' do
         patch :mark_best, params: { id: answer, question_id: question, answer: attributes_for(:answer), format: :js }
-        expect(response).to redirect_to root_path
+        expect(response).to have_http_status(403)
       end
     end
 

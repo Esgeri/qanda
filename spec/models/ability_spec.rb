@@ -24,6 +24,7 @@ RSpec.describe Ability, type: :model do
   describe 'for user' do
     let(:user) { create :user }
     let(:other) { create :user }
+
     let(:user_question) { create :question, user: user }
     let(:other_question) { create :question, user: other }
 
@@ -37,27 +38,41 @@ RSpec.describe Ability, type: :model do
     let(:other_question_attachment) { create :attachment, attachable: other_question }
     let(:other_answer_attachment) { create :attachment, attachable: other_answer }
 
+    let(:user_question_comment) { create :comment, commentable: user_question, user: user }
+    let(:user_answer_comment) { create :comment, commentable: user_answer, user: user }
+    let(:other_question_comment) { create :comment, commentable: other_question, user: user }
+    let(:other_answer_comment) { create :comment, commentable: other_answer, user: user }
+
+    let(:user_question_vote) { create :vote, votable: user_question, user: user }
+    let(:user_answer_vote) { create :vote, votable: user_answer, user: user }
+    let(:other_question_vote) { create :vote, votable: other_question, user: user }
+    let(:other_answer_vote) { create :vote, votable: other_answer, user: user }
+
     it { should_not be_able_to :manage, :all }
     it { should be_able_to :read, :all }
 
     context 'Question' do
       it { should be_able_to :create, Question }
+
       it { should be_able_to :update, create(:question, user: user), user: user }
-      it { should_not be_able_to :update, create(:question, user: other), user: user }
       it { should be_able_to :destroy, create(:question, user: user) }
+
+      it { should_not be_able_to :update, create(:question, user: other), user: user }
       it { should_not be_able_to :destroy, create(:question, user: other) }
     end
 
     context 'Answer' do
       it { should be_able_to :create, Answer }
+
       it { should be_able_to :update, create(:answer, user: user), user: user }
-      it { should_not be_able_to :update, create(:answer, user: other), user: user }
       it { should be_able_to :destroy, create(:answer, user: user) }
-      it { should_not be_able_to :destroy, create(:answer, user: other) }
+
       it { should be_able_to :mark_best, user_answer }
       it { should be_able_to :mark_best, other_answer }
-      it { should_not be_able_to :destroy, other_answer }
+
       it { should_not be_able_to :update, other_answer }
+      it { should_not be_able_to :destroy, other_answer }
+
       it { should_not be_able_to :mark_best, unacceptable_user_answer }
       it { should_not be_able_to :mark_best, unacceptable_other_answer }
     end
@@ -71,7 +86,11 @@ RSpec.describe Ability, type: :model do
      end
 
     context 'Comment' do
-      it { should be_able_to :create, Comment }
+      it { should be_able_to :create, user_question_comment }
+      it { should be_able_to :create, user_answer_comment }
+
+      it { should be_able_to :create, other_question_comment }
+      it { should be_able_to :create, other_answer_comment }
     end
   end
 end
