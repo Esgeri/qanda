@@ -92,5 +92,13 @@ RSpec.describe Ability, type: :model do
       it { should be_able_to :create, other_question_comment }
       it { should be_able_to :create, other_answer_comment }
     end
+
+    context 'REST API' do
+      it { should be_able_to :me, user }
+      it { should be_able_to :users, user }
+
+      it { should_not be_able_to :me, other }
+      it { should_not be_able_to :users, other }
+    end
   end
 end

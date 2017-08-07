@@ -41,5 +41,9 @@ class Ability
     can [:set_like, :set_dislike, :cancel_vote], [Question, Answer] do |votable|
       !user.author_of?(votable)
     end
+
+    can :me, User, id: user.id
+
+    can :users, User, id: user.id
   end
 end
