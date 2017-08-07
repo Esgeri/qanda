@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Profile API' do
-  describe 'GET /me' do
+  describe 'GET /profiles/me' do
     context 'unauthorized' do
       it 'returns 401 status if there is no access_token' do
         get '/api/v1/profiles/me', params: { format: :json }
@@ -38,7 +38,7 @@ RSpec.describe 'Profile API' do
     end
   end
 
-  describe 'GET /users' do
+  describe 'GET /profiles/users' do
     context 'unauthorized' do
       it 'returns 401 status if there is no access_token' do
         get '/api/v1/profiles/users', params: { format: :json }

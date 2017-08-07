@@ -15,6 +15,8 @@ class User < ApplicationRecord
     object.user_id == self.id
   end
 
+  scope :all_users_but_me, ->(user) { where.not(id: user.id) }
+
   def self.find_for_oauth(auth)
     transaction do
       authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first

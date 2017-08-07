@@ -43,6 +43,18 @@ RSpec.describe User do
     end
   end
 
+  describe 'scope' do
+    describe '#all_users_but_me' do
+      it 'all_users_but_me' do
+        users = create_list(:user, 3)
+        me = users.first
+        User.all_users_but_me(me).each do |user|
+          expect(user).to_not eq me
+        end
+      end
+    end
+  end
+
   describe '.find_for_oauth' do
     let!(:user) { create(:user) }
     let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456') }
