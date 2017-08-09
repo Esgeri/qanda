@@ -47,6 +47,9 @@ gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'cancancan'
 gem 'doorkeeper'
+gem 'active_model_serializers'
+gem 'oj'
+gem 'oj_mimic_json'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -76,6 +79,7 @@ group :test, :development do
   gem 'database_cleaner'
   gem 'letter_opener'
   gem 'capybara-email'
+  gem 'json_spec'
 end
 
 group :test do
@@ -84,5 +88,4 @@ group :test do
   gem 'capybara'
   gem 'capybara-webkit', '~> 1.14'
   gem 'launchy'
-  gem 'json_spec'
 end
