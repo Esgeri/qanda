@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Profile API' do
+RSpec.describe class: 'Api::V1::ProfilesController', type: :controller do
   describe 'GET /profiles/me' do
     context 'unauthorized' do
       it 'returns 401 status if there is no access_token' do
