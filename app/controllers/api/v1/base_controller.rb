@@ -1,9 +1,13 @@
 class Api::V1::BaseController < ApplicationController
+  protect_from_forgery with: :null_session
+
   before_action :doorkeeper_authorize!
 
-  authorize_resource class: User
-
   respond_to :json
+
+  rescue_from CanCan::AccessDenied do |exception|
+    render json: exception.message, status: :unauthorized
+  end
 
   protected
 
