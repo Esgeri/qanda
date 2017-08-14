@@ -42,8 +42,6 @@ class Ability
       !user.author_of?(votable)
     end
 
-    can :me, User, id: user.id
-
-    can :users, User, id: user.id
+    can [:me, :index], User, id: user.id
   end
 end

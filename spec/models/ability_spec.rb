@@ -95,10 +95,9 @@ RSpec.describe Ability, type: :model do
 
     context 'REST API' do
       it { should be_able_to :me, user }
-      it { should be_able_to :users, user }
+      it { should be_able_to :index, user }
 
       it { should_not be_able_to :me, other }
-      it { should_not be_able_to :users, other }
     end
   end
 end
