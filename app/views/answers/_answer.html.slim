@@ -1,6 +1,6 @@
 - if answer.persisted?
   div class="answer-#{answer.id}"
-    - if can?(:mark_best, answer)
+    - if can?(:mark_best, answer, user: current_user)
       - if answer.best?
         .best-answer-status
           h4= 'Best answer!'
