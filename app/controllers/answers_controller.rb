@@ -1,10 +1,10 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!
   before_action :load_question, only: [:new, :create]
   before_action :load_answer, only: [:update, :destroy, :mark_best]
 
   after_action :publish_answer, only: [:create]
 
-  include PublicAccess
   include Votes
 
   respond_to :js

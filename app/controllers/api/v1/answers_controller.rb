@@ -1,6 +1,4 @@
 class Api::V1::AnswersController < Api::V1::BaseController
-  skip_before_action :authenticate_user!, only: [:index, :show, :create]
-
   before_action :load_question, except: :show
 
   authorize_resource

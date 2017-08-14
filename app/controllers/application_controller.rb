@@ -16,7 +16,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  before_action :authenticate_user!
   before_action :gon_user, unless: :devise_controller?
 
   def gon_user
