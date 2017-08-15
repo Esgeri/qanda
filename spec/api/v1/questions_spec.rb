@@ -12,9 +12,7 @@ RSpec.describe class: 'Api::V1::QuestionsController', type: :controller do
 
       before { get '/api/v1/questions', params: { format: :json, access_token: access_token.token } }
 
-      it 'returns 200 status' do
-        expect(response).to be_success
-      end
+      it_behaves_like 'API Status 200'
 
       it 'returns list of questions' do
         expect(response.body).to have_json_size(2)
@@ -62,9 +60,7 @@ RSpec.describe class: 'Api::V1::QuestionsController', type: :controller do
 
       before { get "/api/v1/questions/#{question.id}", params: { format: :json, access_token: access_token.token } }
 
-      it 'returns 200 status' do
-        expect(response).to be_success
-      end
+      it_behaves_like 'API Status 200'
 
       %w(id title body created_at updated_at).each do |attr|
         it "question object contains #{attr}" do
