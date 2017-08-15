@@ -72,17 +72,7 @@ RSpec.describe class: 'Api::V1::QuestionsController', type: :controller do
         end
       end
 
-      context 'comments' do
-        it 'included in question object' do
-          expect(response.body).to have_json_size(1).at_path("comments")
-        end
-
-        %w(id body).each do |attr|
-          it "contains #{attr}" do
-            expect(response.body).to be_json_eql(comment.send(attr.to_sym).to_json).at_path("comments/0/#{attr}")
-          end
-        end
-      end
+      it_behaves_like 'API Commentable'
 
       context 'attachments' do
         it 'included in question object' do
