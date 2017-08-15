@@ -1,6 +1,6 @@
 shared_examples_for 'API Attachable' do
   context 'attachments' do
-    it 'included in question object' do
+    it 'included in resource object' do
       expect(response.body).to have_json_size(1).at_path("attachments")
     end
 
