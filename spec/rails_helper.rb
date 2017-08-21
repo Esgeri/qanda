@@ -9,6 +9,9 @@ require 'rspec/rails'
 require 'capybara'
 require 'capybara/email/rspec'
 require 'cancan/matchers'
+require 'sidekiq/testing'
+
+Sidekiq::Testing.inline!
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
