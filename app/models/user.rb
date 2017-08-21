@@ -11,11 +11,13 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :authorizations, dependent: :destroy
 
-  def author_of?(object)
-    object.user_id == self.id
-  end
-
   scope :all_users_but_me, ->(user) { where.not(id: user.id) }
+
+  def self.send_daily_digest
+    find_each.each do |user|
+      DailyMailer.digest(user).deliver_later
+    end
+  end
 
   def self.find_for_oauth(auth)
     transaction do
@@ -34,6 +36,10 @@ class User < ApplicationRecord
       user.create_authorization(auth)
       user
     end
+  end
+
+  def author_of?(object)
+    object.user_id == self.id
   end
 
   def create_authorization(auth)
