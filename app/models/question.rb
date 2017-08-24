@@ -5,6 +5,7 @@ class Question < ApplicationRecord
   include Commentable
 
   has_many :answers, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
 
   validates :title, :body, presence: true
 
