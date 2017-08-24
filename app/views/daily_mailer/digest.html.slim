@@ -1,2 +1,8 @@
-h1 Daily#digest
-p = @greeting + ", find me in app/views/daily_mailer/digest.html.slim"
+h1 Daily digest of questions
+
+- if @questions
+  ul
+    - @questions.find_each do |question|
+      li= link_to question.title, question
+- else
+  | No questions

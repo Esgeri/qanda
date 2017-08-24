@@ -1,8 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe DailyDigestJob, type: :job do
-  it 'sends daily digest' do
-    expect(User).to receive(:send_daily_digest)
+  let(:users) { create_pair(:user) }
+
+  it 'sends daily digest to users' do
+    users.each do |user|
+      expect(DailyMailer).to receive(:digest).with(user).and_call_original
+    end
     DailyDigestJob.perform_now
   end
 end
