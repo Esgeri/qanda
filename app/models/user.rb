@@ -20,6 +20,10 @@ class User < ApplicationRecord
     end
   end
 
+  def subscribed?(question)
+    Subscription.exists?(user_id: self.id, question_id: question.id)
+  end
+
   def self.find_for_oauth(auth)
     transaction do
       authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first

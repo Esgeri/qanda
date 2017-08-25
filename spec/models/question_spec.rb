@@ -28,4 +28,13 @@ RSpec.describe Question, type: :model do
       expect(Question.created_yesterday).to_not eq old_questions
     end
   end
+
+  describe "Author of question can subscribe for question update's" do
+    let(:user) { create(:user) }
+    let(:question) { create(:question, user: user) }
+
+    it "subscribes question's author" do
+      expect { question.save }.to change(user.subscriptions, :count).by(1)
+    end
+  end
 end

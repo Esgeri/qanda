@@ -131,4 +131,19 @@ RSpec.describe User do
       User.send_daily_digest
     end
   end
+
+  describe '.subscribed?' do
+    let(:subscribed_user){ create(:user) }
+    let(:unsubscribed_user){ create(:user) }
+    let(:question){ create(:question) }
+    let!(:subscribtion){ create(:subscription, user: subscribed_user, question: question) }
+
+    it 'check subscribe user' do
+      expect(subscribed_user.subscribed?(question)).to eq true
+    end
+
+    it 'check unsubscribe user' do
+      expect(unsubscribed_user.subscribed?(question)).to eq false
+    end
+  end
 end
