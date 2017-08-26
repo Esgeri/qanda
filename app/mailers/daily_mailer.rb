@@ -7,7 +7,7 @@ class DailyMailer < ApplicationMailer
   #
   def digest(user)
     @questions = Question.created_yesterday
-
+    @greeting = "Hi #{user.email}"
     if @questions.any?
       mail(to: user.email, subject: 'Daily digest of questions')
     end
