@@ -1,0 +1,7 @@
+h2 = @greeting
+
+h1 There is a new answer to the question:
+p
+  = link_to "#{@answer.question.title}", @answer.question
+p
+  = @answer.body
