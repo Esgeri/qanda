@@ -10,10 +10,18 @@ class Answer < ApplicationRecord
 
   scope :on_top, -> { order(best: :desc, created_at: :asc) }
 
+  after_create :send_notify
+
   def set_best
     Answer.transaction do
       self.question.answers.where.not(id: self).update_all(best: false)
       self.update!(best: true)
     end
+  end
+
+  private
+
+  def send_notify
+    AnswersNotifierJob.perform_later(self)
   end
 end
