@@ -10,7 +10,7 @@ class Answer < ApplicationRecord
 
   scope :on_top, -> { order(best: :desc, created_at: :asc) }
 
-  after_create :send_notify
+  after_commit :send_notify, on: :create
 
   def set_best
     Answer.transaction do

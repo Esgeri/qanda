@@ -3,7 +3,7 @@ class AnswersNotifierJob < ApplicationJob
 
   def perform(answer)
     answer.question.subscriptions.find_each do |subscription|
-      AnswerNotifierMailer.notify(subscription.user, answer).deliver_later #unless answer.user_id == subscription.user_id
+      AnswerNotifierMailer.notify(subscription.user, answer).deliver_later
     end
   end
 end
