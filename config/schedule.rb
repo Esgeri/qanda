@@ -13,8 +13,13 @@
 #   rake "some:great:rake:task"
 # end
 #
-every 1.day do
+every 1.day, at: '0:00 am' do
   runner "DailyDigestJob.perform_now"
+end
+
+every 1.hours do
+  puts "#{Time.zone.now} Notify new answers"
+  runner 'Answer.send_notify'
 end
 
 # Learn more: http://github.com/javan/whenever
