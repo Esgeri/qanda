@@ -3,7 +3,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def facebook; end
 
-  def twitter(auth = nil)
+  def twitter
     unless @user.persisted?
       session['devise.twitter_data'] = request.env['omniauth.auth'].except('extra')
       render 'devise/confirmations/confirm_email'
