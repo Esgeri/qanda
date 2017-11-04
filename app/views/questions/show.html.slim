@@ -3,6 +3,8 @@
     .rating
       = render 'votes/vote', votable: @question
 
+    = render 'subscriptions/subscription', question: @question
+
     h1 class="question-title-#{@question.id}"
       = @question.title
     p class="question-body-#{@question.id}"

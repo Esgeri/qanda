@@ -10,20 +10,27 @@ class User < ApplicationRecord
   has_many :votes, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :authorizations, dependent: :destroy
-
-  def author_of?(object)
-    object.user_id == self.id
-  end
+  has_many :subscriptions, dependent: :destroy
 
   scope :all_users_but_me, ->(user) { where.not(id: user.id) }
 
+  def self.send_daily_digest
+    find_each.each do |user|
+      DailyMailer.digest(user).deliver_later
+    end
+  end
+
+  def subscribed?(question)
+    Subscription.exists?(user_id: self.id, question_id: question.id)
+  end
+
   def self.find_for_oauth(auth)
     transaction do
-      authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
+      authorization = Authorization.find_by(provider: auth.provider, uid: auth.uid.to_s)
       return authorization.user if authorization
 
       email = auth.info.email
-      user = User.where(email: email).first
+      user = User.find_by(email: email)
 
       unless user
         password = Devise.friendly_token[0, 20]
@@ -34,6 +41,10 @@ class User < ApplicationRecord
       user.create_authorization(auth)
       user
     end
+  end
+
+  def author_of?(object)
+    object.user_id == self.id
   end
 
   def create_authorization(auth)

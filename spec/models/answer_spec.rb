@@ -32,4 +32,21 @@ RSpec.describe Answer, type: :model do
       expect(best_answer).to_not be_best
     end
   end
+
+  describe 'Notification author of question after create answer' do
+    let(:user) { create(:user) }
+    let(:question) { create(:question, user: user) }
+    let(:answer) { create(:answer, question: question) }
+
+    it 'notified job after create answer' do
+      expect(AnswersNotifierJob).to receive(:perform_later).and_call_original
+      answer.save!
+    end
+
+    it 'do not notified job after answer updated' do
+      answer.save!
+      expect(AnswersNotifierJob).to_not receive(:perform_later)
+      answer.update!(body: 'answer updated!')
+    end
+  end
 end

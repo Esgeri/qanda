@@ -50,12 +50,22 @@ gem 'doorkeeper'
 gem 'active_model_serializers'
 gem 'oj'
 gem 'oj_mimic_json'
+gem 'whenever'
+gem 'sidekiq'
+gem 'sinatra', '>= 1.3.0', require: nil
+gem 'sidetiq'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   # Adds support for Capybara system testing and selenium driver
   # gem 'selenium-webdriver'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem "chromedriver-helper", "1.0.0"
+  gem 'database_cleaner'
+  gem 'letter_opener'
+  gem 'capybara-email'
 end
 
 group :development do
@@ -72,20 +82,11 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
-group :test, :development do
-  gem 'rspec-rails'
-  gem 'factory_girl_rails'
-  gem "chromedriver-helper", "1.0.0"
-  gem 'database_cleaner'
-  gem 'letter_opener'
-  gem 'capybara-email'
-  gem 'json_spec'
-end
-
 group :test do
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
   gem 'capybara'
   gem 'capybara-webkit', '~> 1.14'
   gem 'launchy'
+  gem 'json_spec'
 end

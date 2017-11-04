@@ -7,7 +7,7 @@ module Votes
   end
 
   def set_like
-    if has_vote?
+    if voted?
       render json: { data: 'You can vote only once!' }, status: 403
     else
       @votable.like_by(current_user)
@@ -16,7 +16,7 @@ module Votes
   end
 
   def set_dislike
-    if has_vote?
+    if voted?
       render json: { data: 'You can vote only once!' }, status: 403
     else
       @votable.dislike_by(current_user)
@@ -25,7 +25,7 @@ module Votes
   end
 
   def cancel_vote
-    if has_vote?
+    if voted?
       @votable.unvote(current_user)
       render json: { id: @votable.id, rating: @votable.rating }, status: 200
     else
@@ -49,7 +49,7 @@ module Votes
     end
   end
 
-  def has_vote?
+  def voted?
     @votable.votes.find_by(user: current_user)
   end
 end

@@ -50,6 +50,21 @@ Style/FileName:
 Style/SymbolArray:
   Enabled: false
 
+Style/RedundantSelf:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Layout/AlignParameters:
+  Enabled: false
+
+Style/Lambda:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
 require: rubocop-rspec
 
 ---

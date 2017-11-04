@@ -48,6 +48,8 @@ RSpec.describe Ability, type: :model do
     let(:other_question_vote) { create :vote, votable: other_question, user: user }
     let(:other_answer_vote) { create :vote, votable: other_answer, user: user }
 
+    let(:subscription) { create(:subscription, user: user) }
+
     it { should_not be_able_to :manage, :all }
     it { should be_able_to :read, :all }
 
@@ -91,6 +93,12 @@ RSpec.describe Ability, type: :model do
 
       it { should be_able_to :create, other_question_comment }
       it { should be_able_to :create, other_answer_comment }
+    end
+
+    context 'Subscription' do
+      it { should be_able_to :create, subscription }
+
+      it { should be_able_to :destroy, subscription, user: user }
     end
 
     context 'REST API' do
